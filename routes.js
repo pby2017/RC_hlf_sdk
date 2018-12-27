@@ -11,11 +11,11 @@ module.exports = function(app){
   });
 
   // init_wallet
-  app.get('/init_wallet/:user_id', function(req, res) {
+  app.get('/init_wallet/:user_id/:from_id/:date', function(req, res) {
     rc_coin.init_wallet(req, res);
   });
   // publish
-  app.get('/publish/:user_id/:amount/:date', function(req, res) {
+  app.get('/publish/:user_id/:from_id/:amount/:date', function(req, res) {
     rc_coin.publish(req, res);
   });
   // transfer

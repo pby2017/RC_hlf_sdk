@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Apache-2.0
+//SPDX-License-Identifier: Apache-1.0
 
 /*
   This code is based on code written by the Hyperledger Fabric community.
@@ -23,9 +23,12 @@ module.exports = (function() {
 			console.log("changing holder of tuna catch: ");
 			
 			var param_userId = req.params.user_id
+			var param_fromId = req.params.from_id
+			var param_date = req.params.date
 			console.log("param##########################")
 			console.log(param_userId)
-
+			console.log(param_fromId)
+			console.log(param_date)
 
 			var fabric_client = new Fabric_Client();
 	
@@ -42,6 +45,8 @@ module.exports = (function() {
 			var tx_id = null;
 			var result_of_tx = {};
 			result_of_tx['userId'] = param_userId; 
+			result_of_tx['fromId'] = param_fromId;
+			result_of_tx['date'] = param_date;
 	
 			// create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
 			Fabric_Client.newDefaultKeyValueStore({ path: store_path
@@ -75,7 +80,7 @@ module.exports = (function() {
 				var request = {
 					chaincodeId: 'rc_cc',
 					fcn: 'init_wallet',
-					args: [param_userId],
+					args: [param_userId, param_fromId, param_date],
 					chainId: 'channelrc',
 					txId: tx_id
 				};
@@ -138,10 +143,11 @@ module.exports = (function() {
 			console.log("changing holder of tuna catch: ");
 			
 			var param_userId = req.params.user_id;
+			var param_fromId = req.params.from_id;
 			var param_amount = req.params.amount;
 			var param_date = req.params.date;
 			console.log("###################################################")
-			console.log(param_userId + ":" + param_amount + ":" + param_date)
+			console.log(param_userId + ":" + param_userId + ":" + param_fromId + ":" + param_amount + ":" + param_date)
 			console.log("###################################################")
 	
 			var fabric_client = new Fabric_Client();
@@ -159,6 +165,7 @@ module.exports = (function() {
 			var tx_id = null;
 			var result_of_tx = {};
 			result_of_tx['userId'] = param_userId;
+			result_of_tx['fromId'] = param_fromId;
 			result_of_tx['amount'] = param_amount;
 			result_of_tx['date']   = param_date;
 	
@@ -194,7 +201,7 @@ module.exports = (function() {
 				var request = {
 					chaincodeId: 'rc_cc',
 					fcn: 'publish',
-					args: [param_userId, "0", param_amount, param_date],
+					args: [param_userId, param_fromId, param_amount, param_date],
 					chainId: 'channelrc',
 					txId: tx_id
 				};
