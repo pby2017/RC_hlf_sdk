@@ -30,7 +30,7 @@ module.exports = (function() {
 			var fabric_client = new Fabric_Client();
 	
 			// setup the fabric network
-			var channel = fabric_client.newChannel('mychannel');
+			var channel = fabric_client.newChannel('channelrc');
 			var peer = fabric_client.newPeer('grpc://localhost:7051');
 			channel.addPeer(peer);
 			var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -73,10 +73,10 @@ module.exports = (function() {
 				//                                  init_wallet
 				/////////////////////////////////////////////////////////////////////////////
 				var request = {
-					chaincodeId: 'rc',
+					chaincodeId: 'rc_cc',
 					fcn: 'init_wallet',
 					args: [param_userId],
-					chainId: 'mychannel',
+					chainId: 'channelrc',
 					txId: tx_id
 				};
 
@@ -147,7 +147,7 @@ module.exports = (function() {
 			var fabric_client = new Fabric_Client();
 	
 			// setup the fabric network
-			var channel = fabric_client.newChannel('mychannel');
+			var channel = fabric_client.newChannel('channelrc');
 			var peer = fabric_client.newPeer('grpc://localhost:7051');
 			channel.addPeer(peer);
 			var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -192,10 +192,10 @@ module.exports = (function() {
 				//                                  publish
 				/////////////////////////////////////////////////////////////////////////////
 				var request = {
-					chaincodeId: 'rc',
+					chaincodeId: 'rc_cc',
 					fcn: 'publish',
 					args: [param_userId, "0", param_amount, param_date],
-					chainId: 'mychannel',
+					chainId: 'channelrc',
 					txId: tx_id
 				};
 
@@ -267,7 +267,7 @@ module.exports = (function() {
 			var fabric_client = new Fabric_Client();
 	
 			// setup the fabric network
-			var channel = fabric_client.newChannel('mychannel');
+			var channel = fabric_client.newChannel('channelrc');
 			var peer = fabric_client.newPeer('grpc://localhost:7051');
 			channel.addPeer(peer);
 			var order = fabric_client.newOrderer('grpc://localhost:7050')
@@ -315,10 +315,10 @@ module.exports = (function() {
 				// '{"Args":["transfer", "yang", "lee", "10", "1", "2"]}'
 				/////////////////////////////////////////////////////////////////////////////
 				var request = {
-					chaincodeId: 'rc',
+					chaincodeId: 'rc_cc',
 					fcn: 'transfer',
 					args: [param_fromId, param_toId, param_amount, param_type, param_date],
-					chainId: 'mychannel',
+					chainId: 'channelrc',
 					txId: tx_id
 				};
 
@@ -387,7 +387,7 @@ module.exports = (function() {
 			var fabric_client = new Fabric_Client();
 	
 			// setup the fabric network
-			var channel = fabric_client.newChannel('mychannel');
+			var channel = fabric_client.newChannel('channelrc');
 			var peer = fabric_client.newPeer('grpc://localhost:7051');
 			channel.addPeer(peer);
 	
@@ -426,10 +426,10 @@ module.exports = (function() {
 				/////////////////////////////////////////////////////////////////////////////
 				var request = {
 					//targets : --- letting this default to the peers assigned to the channel
-					chaincodeId: 'rc',
+					chaincodeId: 'rc_cc',
 					fcn: 'get_account',
 					args: [param_userId],
-					chainId: 'mychannel',
+					chainId: 'channelrc',
 					txId: tx_id
 				};
 	
@@ -471,7 +471,7 @@ module.exports = (function() {
 			var fabric_client = new Fabric_Client();
 	
 			// setup the fabric network
-			var channel = fabric_client.newChannel('mychannel');
+			var channel = fabric_client.newChannel('channelrc');
 			var peer = fabric_client.newPeer('grpc://localhost:7051');
 			channel.addPeer(peer);
 	
@@ -510,10 +510,10 @@ module.exports = (function() {
 				/////////////////////////////////////////////////////////////////////////////
 				var request = {
 					//targets : --- letting this default to the peers assigned to the channel
-					chaincodeId: 'rc',
+					chaincodeId: 'rc_cc',
 					fcn: 'get_txList',
 					args: [param_userId],
-					chainId: 'mychannel',
+					chainId: 'channelrc',
 					txId: tx_id
 				};
 	
@@ -534,13 +534,14 @@ module.exports = (function() {
 
 						for( let i=0; i<json_string.length; i++){
 							console.log(json_string[i]['txId']);
+console.log(json_string[i]);
 							let result_map = {
 								'tx_id' : json_string[i]['txId'],
-								'balance' : json_string[i]['value']['value'],
-								'from_or_to' : json_string[i]['value']['Transfer']['fromOrTo'],
-								'value' : json_string[i]['value']['Transfer']['value'],
-								'type' : json_string[i]['value']['Transfer']['type'],
-								'date' : json_string[i]['value']['Transfer']['date']
+								'balance' : json_string[i]['value']['balance'],
+								'trader' : json_string[i]['value']['TxInfo']['trader'],
+								'amount' : json_string[i]['value']['TxInfo']['amount'],
+								'txType' : json_string[i]['value']['TxInfo']['txType'],
+								'date' : json_string[i]['value']['TxInfo']['date']
 							};
 							result_list.push(result_map)
 						}
